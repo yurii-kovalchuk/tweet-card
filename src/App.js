@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import logo from "./logo.svg";
+import pict from "./picture.png";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="card">
+      <img src={logo} alt="logo" className="logo" />
+      <div className="pictWrap">
+        <img src={pict} alt="social media icons" />
+      </div>
+      <div className="line">
+        <img className="avatar" alt="avatar" />
+      </div>
+      <div className="info">
+        <p className="tweets">777 TWEETS</p>
+        <p className="followers">100,500 FOLLOWERS</p>
+        <button type="button" className="btn">
+          FOLLOW
+        </button>
+      </div>
     </div>
   );
 }
