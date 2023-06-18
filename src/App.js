@@ -10,7 +10,9 @@ function App() {
         <img src={pict} alt="social media icons" />
       </div>
       <div className="line">
-        <img className="avatar" alt="avatar" />
+        <div className="avatarWrap">
+          <img className="avatar" alt="avatar" />
+        </div>
       </div>
       <div className="info">
         <p className="tweets">777 TWEETS</p>
