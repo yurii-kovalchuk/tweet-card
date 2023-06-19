@@ -1,49 +1,35 @@
 import "./App.css";
-import logo from "./logo.svg";
-import pict from "./picture.png";
-import avatar from "./avatar.png";
-import { useState, useEffect } from "react";
-
-const storageState = () => {
-  return JSON.parse(localStorage.getItem("isFollowing")) || false;
-};
+import CardList from "./components/CardList/CardList";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [isFollowing, setIsFollowing] = useState(storageState);
-  const initNum = 100500;
+  const [users, setUsers] = useState([]);
+  const [pagination, setPagination] = useState(3);
 
   useEffect(() => {
-    localStorage.setItem("isFollowing", JSON.stringify(isFollowing));
-  }, [isFollowing]);
+    const getCards = async () => {
+      try {
+        const resp = await fetch(
+          `https://63fc8dd6677c4158730e5bf6.mockapi.io/my-api/users`
+        );
+        const result = await resp.json();
+        setUsers(result);
+      } catch (e) {
+        console.error(e.message);
+      }
+    };
 
+    getCards();
+  }, []);
   const handleClick = () => {
-    setIsFollowing(isFollowing ? false : true);
+    setPagination((state) => state + 3);
   };
-
-  const followersNumber = isFollowing ? initNum + 1 : initNum;
-  const btnClasses = isFollowing ? "btn btn-following" : "btn";
-  const btnText = isFollowing ? "FOLLOWING" : "FOLLOW";
-
   return (
-    <div className="card">
-      <img src={logo} alt="logo" className="logo" />
-      <div className="pictWrap">
-        <img src={pict} alt="social media icons" />
-      </div>
-      <div className="line">
-        <div className="avatarWrap">
-          <img src={avatar} alt="avatar" className="avatar" />
-        </div>
-      </div>
-      <div className="info">
-        <p className="tweets">777 TWEETS</p>
-        <p className="followers">
-          {new Intl.NumberFormat("en-US").format(followersNumber)} FOLLOWERS
-        </p>
-        <button type="button" className={btnClasses} onClick={handleClick}>
-          {btnText}
-        </button>
-      </div>
+    <div>
+      <CardList users={users.slice(0, pagination)} />
+      <button type="button" onClick={handleClick} className="btnLoadMore">
+        Load More
+      </button>
     </div>
   );
 }
