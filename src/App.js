@@ -1,6 +1,9 @@
 import "./App.css";
 import logo from "./logo.svg";
 import pict from "./picture.png";
+import avatar from "./avatar.png";
+
+const num = 100500;
 
 function App() {
   return (
@@ -11,12 +14,14 @@ function App() {
       </div>
       <div className="line">
         <div className="avatarWrap">
-          <img className="avatar" alt="avatar" />
+          <img src={avatar} alt="avatar" className="avatar" />
         </div>
       </div>
       <div className="info">
         <p className="tweets">777 TWEETS</p>
-        <p className="followers">100,500 FOLLOWERS</p>
+        <p className="followers">
+          {new Intl.NumberFormat("en-US").format(num)} FOLLOWERS
+        </p>
         <button type="button" className="btn">
           FOLLOW
         </button>
