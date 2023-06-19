@@ -4,16 +4,25 @@ import pict from "../../images/picture.png";
 import defaultAvatar from "../../images/avatar.png";
 import { useState, useEffect } from "react";
 
-const storageState = () => {
-  return JSON.parse(localStorage.getItem("isFollowing")) || false;
-};
-
-const Card = ({ info: { tweets, user, avatar, followers } = {} }) => {
-  const [isFollowing, setIsFollowing] = useState(storageState);
+const Card = ({
+  info: { id, tweets, user, avatar = defaultAvatar, followers } = {},
+}) => {
+  const [isFollowing, setIsFollowing] = useState(() => {
+    const storageState = JSON.parse(localStorage.getItem("isFollowing")) || [];
+    const isFollowing = storageState.find((el) => el === id);
+    return isFollowing ? true : false;
+  });
 
   useEffect(() => {
-    localStorage.setItem("isFollowing", JSON.stringify(isFollowing));
-  }, [isFollowing]);
+    let arr = JSON.parse(localStorage.getItem("isFollowing")) || [];
+    if (isFollowing) {
+      arr.push(id);
+      localStorage.setItem("isFollowing", JSON.stringify(arr));
+    } else {
+      const newArr = arr.filter((el) => el !== id);
+      localStorage.setItem("isFollowing", JSON.stringify(newArr));
+    }
+  }, [isFollowing, id]);
 
   const handleClick = () => {
     setIsFollowing(isFollowing ? false : true);
