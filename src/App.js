@@ -2,10 +2,28 @@ import "./App.css";
 import logo from "./logo.svg";
 import pict from "./picture.png";
 import avatar from "./avatar.png";
+import { useState, useEffect } from "react";
 
-const num = 100500;
+const storageState = () => {
+  return JSON.parse(localStorage.getItem("isFollowing")) || false;
+};
 
 function App() {
+  const [isFollowing, setIsFollowing] = useState(storageState);
+  const initNum = 100500;
+
+  useEffect(() => {
+    localStorage.setItem("isFollowing", JSON.stringify(isFollowing));
+  }, [isFollowing]);
+
+  const handleClick = () => {
+    setIsFollowing(isFollowing ? false : true);
+  };
+
+  const followersNumber = isFollowing ? initNum + 1 : initNum;
+  const btnClasses = isFollowing ? "btn btn-following" : "btn";
+  const btnText = isFollowing ? "FOLLOWING" : "FOLLOW";
+
   return (
     <div className="card">
       <img src={logo} alt="logo" className="logo" />
@@ -20,10 +38,10 @@ function App() {
       <div className="info">
         <p className="tweets">777 TWEETS</p>
         <p className="followers">
-          {new Intl.NumberFormat("en-US").format(num)} FOLLOWERS
+          {new Intl.NumberFormat("en-US").format(followersNumber)} FOLLOWERS
         </p>
-        <button type="button" className="btn">
-          FOLLOW
+        <button type="button" className={btnClasses} onClick={handleClick}>
+          {btnText}
         </button>
       </div>
     </div>
