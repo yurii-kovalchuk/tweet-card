@@ -88,6 +88,10 @@
   color: #373737;
 }
 
+.btn:hover {
+  opacity: 0.9;
+}
+
 .btn-following {
   background: #5cd3a8;
 }

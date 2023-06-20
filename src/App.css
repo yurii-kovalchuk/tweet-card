@@ -17,3 +17,7 @@
   line-height: 22px;
   color: #373737;
 }
+
+.btnLoadMore:hover {
+  opacity: 0.9;
+}

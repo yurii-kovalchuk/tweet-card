@@ -44,7 +44,9 @@ const Card = ({
         </div>
       </div>
       <div className="info">
-        <p className="tweets">{tweets} TWEETS</p>
+        <p className="tweets">
+          {new Intl.NumberFormat("en-US").format(tweets)} TWEETS
+        </p>
         <p className="followers">
           {new Intl.NumberFormat("en-US").format(followersNumber)} FOLLOWERS
         </p>
