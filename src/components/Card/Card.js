@@ -1,36 +1,39 @@
+import { useState } from "react";
+
+import logo from "../../assets/icons/logo.svg";
+import pict from "../../assets/images/picture.png";
+import defaultAvatar from "../../assets/images/avatar.png";
+
 import "./Card.style.css";
-import logo from "../../images/logo.svg";
-import pict from "../../images/picture.png";
-import defaultAvatar from "../../images/avatar.png";
-import { useState, useEffect } from "react";
 
-const Card = ({
-  info: { id, tweets, user, avatar = defaultAvatar, followers } = {},
-}) => {
-  const [isFollowing, setIsFollowing] = useState(() => {
-    const storageState = JSON.parse(localStorage.getItem("isFollowing")) || [];
-    const isFollowing = storageState.find((el) => el === id);
-    return isFollowing ? true : false;
-  });
+export const Card = ({ info }) => {
+  const { id, tweets, avatar = defaultAvatar, followers } = info;
+  const storageFollowed = JSON.parse(localStorage.getItem("followed")) || [];
 
-  useEffect(() => {
-    let arr = JSON.parse(localStorage.getItem("isFollowing")) || [];
-    if (isFollowing) {
-      arr.push(id);
-      localStorage.setItem("isFollowing", JSON.stringify(arr));
+  const [isFollowing, setIsFollowing] = useState(
+    storageFollowed.find((userId) => userId === id)
+  );
+  const [count, setCount] = useState(followers);
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+
+    if (!isFollowing) {
+      storageFollowed.push(id);
+      localStorage.setItem("followed", JSON.stringify(storageFollowed));
+      setCount((state) => state + 1);
     } else {
-      const newArr = arr.filter((el) => el !== id);
-      localStorage.setItem("isFollowing", JSON.stringify(newArr));
+      const filteredFollowed = storageFollowed.filter(
+        (userId) => userId !== id
+      );
+      localStorage.setItem("followed", JSON.stringify(filteredFollowed));
+      setCount((state) => state - 1);
     }
-  }, [isFollowing, id]);
-
-  const handleClick = () => {
-    setIsFollowing(isFollowing ? false : true);
   };
 
-  const followersNumber = isFollowing ? followers + 1 : followers;
   const btnClasses = isFollowing ? "btn btn-following" : "btn";
   const btnText = isFollowing ? "FOLLOWING" : "FOLLOW";
+  const formatedValue = (value) => new Intl.NumberFormat("en-US").format(value);
 
   return (
     <div className="card">
@@ -44,18 +47,12 @@ const Card = ({
         </div>
       </div>
       <div className="info">
-        <p className="tweets">
-          {new Intl.NumberFormat("en-US").format(tweets)} TWEETS
-        </p>
-        <p className="followers">
-          {new Intl.NumberFormat("en-US").format(followersNumber)} FOLLOWERS
-        </p>
-        <button type="button" className={btnClasses} onClick={handleClick}>
+        <p>{formatedValue(tweets)} TWEETS</p>
+        <p>{formatedValue(count)} FOLLOWERS</p>
+        <button type="button" className={btnClasses} onClick={handleFollow}>
           {btnText}
         </button>
       </div>
     </div>
   );
 };
-
-export default Card;

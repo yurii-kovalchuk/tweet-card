@@ -1,7 +1,8 @@
-import Card from "../Card/Card";
+import { Card } from "../Card/Card";
+
 import "./CardList.style.css";
 
-const CardList = ({ users }) => {
+export const CardList = ({ users }) => {
   return (
     <ul className="list">
       {users.map((user) => (
@@ -12,5 +13,3 @@ const CardList = ({ users }) => {
     </ul>
   );
 };
-
-export default CardList;

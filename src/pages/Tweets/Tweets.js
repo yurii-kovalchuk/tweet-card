@@ -1,8 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CardList from "../components/CardList/CardList";
-import "../App.css";
+
+import { CardList } from "../../components/CardList/CardList";
+
+import "./Tweets.style.css";
 
 export const Tweets = () => {
   const [users, setUsers] = useState([]);
