@@ -1,11 +1,13 @@
 import React from "react";
-import "../App.css";
-import CardList from "../components/CardList/CardList";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CardList from "../components/CardList/CardList";
+import "../App.css";
 
 export const Tweets = () => {
   const [users, setUsers] = useState([]);
   const [pagination, setPagination] = useState(3);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCards = async () => {
@@ -22,11 +24,19 @@ export const Tweets = () => {
 
     getCards();
   }, []);
+
   const handleClick = () => {
     setPagination((state) => state + 3);
   };
+
+  const onBack = () => {
+    navigate("/");
+  };
   return (
     <div>
+      <button type="button" onClick={onBack}>
+        Back
+      </button>
       <CardList users={users.slice(0, pagination)} />
       <button type="button" onClick={handleClick} className="btnLoadMore">
         Load More
