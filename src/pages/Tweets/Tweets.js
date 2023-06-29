@@ -9,10 +9,12 @@ import "./Tweets.style.css";
 export const Tweets = () => {
   const [users, setUsers] = useState([]);
   const [pagination, setPagination] = useState(3);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getCards = async () => {
+      setIsLoading(true);
       try {
         const resp = await fetch(
           `https://63fc8dd6677c4158730e5bf6.mockapi.io/my-api/users`
@@ -21,6 +23,8 @@ export const Tweets = () => {
         setUsers(result);
       } catch (e) {
         console.error(e.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -39,10 +43,16 @@ export const Tweets = () => {
       <button type="button" onClick={onBack}>
         Back
       </button>
-      <CardList users={users.slice(0, pagination)} />
-      <button type="button" onClick={handleClick} className="btnLoadMore">
-        Load More
-      </button>
+      {isLoading ? (
+        <div>Loading, please wait...</div>
+      ) : (
+        <>
+          <CardList users={users.slice(0, pagination)} />
+          <button type="button" onClick={handleClick} className="btnLoadMore">
+            Load More
+          </button>
+        </>
+      )}
     </div>
   );
 };
