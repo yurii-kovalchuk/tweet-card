@@ -31,7 +31,7 @@ export const Card = ({ info }) => {
     }
   };
 
-  const btnClasses = isFollowing ? "btn btn-following" : "btn";
+  const btnClasses = isFollowing ? "btn btnFollowing" : "btn";
   const btnText = isFollowing ? "FOLLOWING" : "FOLLOW";
   const formatedValue = (value) => new Intl.NumberFormat("en-US").format(value);
 

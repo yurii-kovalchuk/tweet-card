@@ -40,7 +40,7 @@ export const Tweets = () => {
   };
   return (
     <div>
-      <button type="button" className="btnTweets btnBack" onClick={onBack}>
+      <button type="button" className="btn btnBack" onClick={onBack}>
         Back
       </button>
       {isLoading ? (
@@ -48,7 +48,7 @@ export const Tweets = () => {
       ) : (
         <>
           <CardList users={users.slice(0, pagination)} />
-          <button type="button" className="btnTweets" onClick={handleClick}>
+          <button type="button" className="btn" onClick={handleClick}>
             Load More
           </button>
         </>
