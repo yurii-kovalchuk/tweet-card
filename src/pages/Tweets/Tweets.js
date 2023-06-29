@@ -38,6 +38,7 @@ export const Tweets = () => {
   const onBack = () => {
     navigate("/");
   };
+
   return (
     <div>
       <button type="button" className="btn btnBack" onClick={onBack}>
@@ -48,9 +49,11 @@ export const Tweets = () => {
       ) : (
         <>
           <CardList users={users.slice(0, pagination)} />
-          <button type="button" className="btn" onClick={handleClick}>
-            Load More
-          </button>
+          {users.length > pagination && (
+            <button type="button" className="btn" onClick={handleClick}>
+              Load More
+            </button>
+          )}
         </>
       )}
     </div>
