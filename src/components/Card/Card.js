@@ -1,33 +1,36 @@
 import { useState } from "react";
 
-import logo from "../../assets/icons/logo.svg";
-import pict from "../../assets/images/picture.png";
-import defaultAvatar from "../../assets/images/avatar.png";
+import { getFollowedFromLocalStorage } from "../../utils/getFollowedFromLocalStorage";
+import { setFollowedToLocalStorage } from "../../utils/setFollowedToLocalStorage";
+import { getIsFollowingFromLocalStorage } from "../../utils/getIsFollowingFromLocalStorage";
 
 import "./Card.style.css";
 
-const getStoredFollowed = () => {
-  return JSON.parse(localStorage.getItem("followed")) || [];
-};
+import logo from "../../assets/icons/logo.svg";
+import pict from "../../assets/images/picture.png";
+import defaultAvatar from "../../assets/images/avatar.png";
 
 export const Card = ({ info }) => {
   const { id, tweets, avatar = defaultAvatar, followers } = info;
 
   const [isFollowing, setIsFollowing] = useState(
-    getStoredFollowed().find((userId) => userId === id)
+    getIsFollowingFromLocalStorage(id)
   );
   const [count, setCount] = useState(followers);
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
-    const storedFollowed = getStoredFollowed();
+    const storedFollowed = getFollowedFromLocalStorage();
 
     if (!isFollowing) {
-      localStorage.setItem("followed", JSON.stringify([...storedFollowed, id]));
+      const updatedFollowed = [...storedFollowed, id];
+      setFollowedToLocalStorage(updatedFollowed);
+
       setCount((state) => state + 1);
     } else {
       const filteredFollowed = storedFollowed.filter((userId) => userId !== id);
-      localStorage.setItem("followed", JSON.stringify(filteredFollowed));
+      setFollowedToLocalStorage(filteredFollowed);
+
       setCount((state) => state - 1);
     }
   };
