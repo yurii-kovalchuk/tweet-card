@@ -9,7 +9,7 @@ export const Home = () => {
       <div className="wrapHome">
         <h1>Welcome to app</h1>
         <h2>To see tweets follow the link</h2>
-        <NavLink to="/tweets" className="tweetsLink">
+        <NavLink to="tweets" className="tweetsLink">
           Tweets
         </NavLink>
       </div>
