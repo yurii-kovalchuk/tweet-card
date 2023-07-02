@@ -6,26 +6,27 @@ import defaultAvatar from "../../assets/images/avatar.png";
 
 import "./Card.style.css";
 
+const getStoredFollowed = () => {
+  return JSON.parse(localStorage.getItem("followed")) || [];
+};
+
 export const Card = ({ info }) => {
   const { id, tweets, avatar = defaultAvatar, followers } = info;
-  const storageFollowed = JSON.parse(localStorage.getItem("followed")) || [];
 
   const [isFollowing, setIsFollowing] = useState(
-    storageFollowed.find((userId) => userId === id)
+    getStoredFollowed().find((userId) => userId === id)
   );
   const [count, setCount] = useState(followers);
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
+    const storedFollowed = getStoredFollowed();
 
     if (!isFollowing) {
-      storageFollowed.push(id);
-      localStorage.setItem("followed", JSON.stringify(storageFollowed));
+      localStorage.setItem("followed", JSON.stringify([...storedFollowed, id]));
       setCount((state) => state + 1);
     } else {
-      const filteredFollowed = storageFollowed.filter(
-        (userId) => userId !== id
-      );
+      const filteredFollowed = storedFollowed.filter((userId) => userId !== id);
       localStorage.setItem("followed", JSON.stringify(filteredFollowed));
       setCount((state) => state - 1);
     }
