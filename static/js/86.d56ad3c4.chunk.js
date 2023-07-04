@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktweet_card=self.webpackChunktweet_card||[]).push([[86],{86:function(e,t,s){s.r(t),s.d(t,{default:function(){return r}});s(791);var n=s(87),c=s(184),r=function(){return(0,c.jsx)(c.Fragment,{children:(0,c.jsxs)("div",{className:"wrapHome",children:[(0,c.jsx)("h1",{children:"Welcome to app"}),(0,c.jsx)("h2",{children:"To see tweets follow the link"}),(0,c.jsx)(n.OL,{to:"tweets",className:"tweetsLink",children:"Tweets"})]})})}}}]);
+//# sourceMappingURL=86.d56ad3c4.chunk.js.map
