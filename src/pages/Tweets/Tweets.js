@@ -6,7 +6,7 @@ import { CardList } from "../../components/CardList/CardList";
 
 import "./Tweets.style.css";
 
-export const Tweets = () => {
+const Tweets = () => {
   const [users, setUsers] = useState([]);
   const [pagination, setPagination] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,3 +59,5 @@ export const Tweets = () => {
     </div>
   );
 };
+
+export default Tweets;

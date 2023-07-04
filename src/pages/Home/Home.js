@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import "./Home.style.css";
 
-export const Home = () => {
+const Home = () => {
   return (
     <>
       <div className="wrapHome">
@@ -16,3 +16,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;
