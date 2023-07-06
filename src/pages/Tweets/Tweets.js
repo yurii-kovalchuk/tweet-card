@@ -76,6 +76,7 @@ const Tweets = () => {
       ) : (
         <>
           <Select
+            className="select"
             options={options}
             onChange={handleChange}
             defaultValue={options[0]}
