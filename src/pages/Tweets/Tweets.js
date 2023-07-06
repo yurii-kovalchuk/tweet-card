@@ -1,13 +1,21 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 import { CardList } from "../../components/CardList/CardList";
-
 import "./Tweets.style.css";
+import { getFollowedFromLocalStorage } from "../../utils/getFollowedFromLocalStorage";
+
+const options = [
+  { value: "all", label: "Show all" },
+  { value: "follow", label: "Follow" },
+  { value: "followings", label: "Followings" },
+];
 
 const Tweets = () => {
   const [users, setUsers] = useState([]);
+  const [selectValue, setSelectValue] = useState("all");
   const [pagination, setPagination] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -39,6 +47,25 @@ const Tweets = () => {
     navigate("/");
   };
 
+  const handleChange = (e) => {
+    setSelectValue(e.value);
+  };
+
+  const filteredUsers = () => {
+    const followedFromStorage = getFollowedFromLocalStorage();
+
+    switch (selectValue) {
+      case "follow":
+        return users.filter((user) => !followedFromStorage.includes(user.id));
+      case "followings":
+        return users.filter((user) => followedFromStorage.includes(user.id));
+      default:
+        return users;
+    }
+  };
+
+  const visibleUsers = filteredUsers();
+
   return (
     <div>
       <button type="button" className="btn btnBack" onClick={onBack}>
@@ -48,8 +75,13 @@ const Tweets = () => {
         <div>Loading, please wait...</div>
       ) : (
         <>
-          <CardList users={users.slice(0, pagination)} />
-          {users.length > pagination && (
+          <Select
+            options={options}
+            onChange={handleChange}
+            defaultValue={options[0]}
+          />
+          <CardList users={visibleUsers.slice(0, pagination)} />
+          {visibleUsers.length > pagination && (
             <button type="button" className="btn" onClick={handleClick}>
               Load More
             </button>
